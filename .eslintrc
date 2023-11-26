@@ -1,0 +1,3 @@
+{
+  "extends": "@launchware/eslint-config-node"
+}
