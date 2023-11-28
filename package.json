@@ -1,6 +1,6 @@
 {
   "name": "jsxinator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "migrate js and ts files to jsx and tsx",
   "main": "./dist/cjs/jsxinator.js",
   "module": "./dist/esm/jsxinator.js",
