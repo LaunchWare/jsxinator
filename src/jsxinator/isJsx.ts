@@ -1,19 +1,26 @@
-import jsx from "acorn-jsx"
-import { readFileSync } from "fs"
+import jsx from "acorn-jsx";
+import tsPlugin from "acorn-typescript";
+import { readFileSync } from "fs";
 
 export const isJsx = async (filePath: string) => {
-  const fileContents = readFileSync(filePath, "utf8")
-  const acorn = await require("acorn")
+  const fileContents = readFileSync(filePath, "utf8");
+  const acorn = await require("acorn");
   try {
-    const results = acorn.Parser.extend(jsx()).parse(fileContents, {
+    let parser = acorn.Parser.extend(jsx());
+    if (filePath.endsWith(".ts")) {
+      parser = acorn.Parser.extend(
+        tsPlugin.tsPlugin({ jsx: { allowNamespaces: true } }),
+      );
+    }
+    const results = parser.parse(fileContents, {
       ecmaVersion: "latest",
       sourceType: "module",
-
-    })
-    return JSON.stringify(results).includes("JSXIdentifier")
+      locations: true,
+    });
+    return JSON.stringify(results).includes("JSXIdentifier");
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(e)
-    return false
+    console.error(`Error parsing: ${filePath}: ${e}`);
+    return false;
   }
-}
+};
