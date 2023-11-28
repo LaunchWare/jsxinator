@@ -19,6 +19,12 @@
   "bin": {
     "jsxinator": "./dist/cjs/cli.js"
   },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "rollup -c",
     "lint:syntax": "eslint --ext .js,.ts,.tsx .",
